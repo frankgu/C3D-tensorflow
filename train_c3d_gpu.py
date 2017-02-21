@@ -286,33 +286,33 @@ def run_training():
       start_step = ckpt.model_checkpoint_path.split('/')[-1].split('-')[-1]
     elif os.path.isfile(FLAGS.pretrained_model):
       print("Finetunning the model")
-      tf.get_variable_scope().reuse_variables()
-      sess.run(init)
-      # Variable to restore
-      variables = {
-        "var_name/wc1": tf.get_variable('c3d_var/conv1/weight'),
-        "var_name/wc2": tf.get_variable('c3d_var/conv2/weight'),
-        "var_name/wc3a": tf.get_variable('c3d_var/conv3/weight_a'),
-        "var_name/wc3b": tf.get_variable('c3d_var/conv3/weight_b'),
-        "var_name/wc4a": tf.get_variable('c3d_var/conv4/weight_a'),
-        "var_name/wc4b": tf.get_variable('c3d_var/conv4/weight_b'),
-        "var_name/wc5a": tf.get_variable('c3d_var/conv5/weight_a'),
-        "var_name/wc5b": tf.get_variable('c3d_var/conv5/weight_b'),
-        "var_name/wd1": tf.get_variable('c3d_var/local6/weights'),
-        "var_name/wd2": tf.get_variable('c3d_var/local7/weights'),
-        "var_name/bc1": tf.get_variable('c3d_var/conv1/biases'),
-        "var_name/bc2": tf.get_variable('c3d_var/conv2/biases'),
-        "var_name/bc3a": tf.get_variable('c3d_var/conv3/biases_a'),
-        "var_name/bc3b": tf.get_variable('c3d_var/conv3/biases_b'),
-        "var_name/bc4a": tf.get_variable('c3d_var/conv4/biases_a'),
-        "var_name/bc4b": tf.get_variable('c3d_var/conv4/biases_b'),
-        "var_name/bc5a": tf.get_variable('c3d_var/conv5/biases_a'),
-        "var_name/bc5b": tf.get_variable('c3d_var/conv5/biases_b'),
-        "var_name/bd1": tf.get_variable('c3d_var/local6/biases'),
-        "var_name/bd2": tf.get_variable('c3d_var/local7/biases')
-      }
-      saver_c3d = tf.train.Saver(variables)
-      saver_c3d.restore(sess, FLAGS.pretrained_model)
+      with tf.variable_scope(tf.get_variable_scope(), reuse=True):
+        sess.run(init)
+        # Variable to restore
+        variables = {
+          "var_name/wc1": tf.get_variable('c3d_var/conv1/weight'),
+          "var_name/wc2": tf.get_variable('c3d_var/conv2/weight'),
+          "var_name/wc3a": tf.get_variable('c3d_var/conv3/weight_a'),
+          "var_name/wc3b": tf.get_variable('c3d_var/conv3/weight_b'),
+          "var_name/wc4a": tf.get_variable('c3d_var/conv4/weight_a'),
+          "var_name/wc4b": tf.get_variable('c3d_var/conv4/weight_b'),
+          "var_name/wc5a": tf.get_variable('c3d_var/conv5/weight_a'),
+          "var_name/wc5b": tf.get_variable('c3d_var/conv5/weight_b'),
+          "var_name/wd1": tf.get_variable('c3d_var/local6/weights'),
+          "var_name/wd2": tf.get_variable('c3d_var/local7/weights'),
+          "var_name/bc1": tf.get_variable('c3d_var/conv1/biases'),
+          "var_name/bc2": tf.get_variable('c3d_var/conv2/biases'),
+          "var_name/bc3a": tf.get_variable('c3d_var/conv3/biases_a'),
+          "var_name/bc3b": tf.get_variable('c3d_var/conv3/biases_b'),
+          "var_name/bc4a": tf.get_variable('c3d_var/conv4/biases_a'),
+          "var_name/bc4b": tf.get_variable('c3d_var/conv4/biases_b'),
+          "var_name/bc5a": tf.get_variable('c3d_var/conv5/biases_a'),
+          "var_name/bc5b": tf.get_variable('c3d_var/conv5/biases_b'),
+          "var_name/bd1": tf.get_variable('c3d_var/local6/biases'),
+          "var_name/bd2": tf.get_variable('c3d_var/local7/biases')
+        }
+        saver_c3d = tf.train.Saver(variables)
+        saver_c3d.restore(sess, FLAGS.pretrained_model)
     else:
       print("Train the model from scratch")
       sess.run(init)
