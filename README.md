@@ -67,3 +67,7 @@ https://www.dropbox.com/sh/8wcjrcadx4r31ux/AAAkz3dQ706pPO8ZavrztRCca?dl=0
 [5]: https://github.com/facebook/C3D
 [6]: http://vlg.cs.dartmouth.edu/c3d/
 
+## Personal Reference 
+### MAC
+activate the virtualenv : `source ~/virtualenv_tensorflow/bin/activate`
+
