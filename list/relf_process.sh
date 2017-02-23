@@ -17,12 +17,14 @@
 
 for folder in $1/*
 do
-    for file in "$folder"/*.avi
+    for a_subfolder in "$folder"/*
     do
-        if [[ ! -d "${file[@]%.avi}" ]]; then
-            mkdir -p "${file[@]%.avi}"
-        fi
-        ffmpeg -i "$file" -vf fps=$2 "${file[@]%.avi}"/%05d.jpg
-        rm "$file"
+        count=0
+        for b_subfolder in "$a_subfolder"/*
+        do
+            count=$((count+1))
+            mv "$b_subfolder" "$a_subfolder"_"$count"
+        done
+        rm -r "$a_subfolder"
     done
 done
