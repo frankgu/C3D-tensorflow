@@ -2,6 +2,7 @@
 
 # convert the images folder to the test.list and train.list file according to
 #   the distribution, command will clear the train.list and test.list files first
+#   Need to create the test.list and train.list files.
 #
 #   Args:
 #       path: the path to the video folder
